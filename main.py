@@ -4,7 +4,7 @@ import numpy as np
 import os
 
 # Path to the folder containing the images
-database_path = "database"
+database_path = "database"  # This should be the path to your images folder
 
 # Initialize arrays for storing face encodings and corresponding names
 known_face_encodings = []
@@ -17,19 +17,20 @@ for filename in os.listdir(database_path):
         name = os.path.splitext(filename)[0].replace("_", " ")
         # Load the image and calculate face encodings
         image_path = os.path.join(database_path, filename)
+        print(f"Loading image: {image_path}")  # To check if the image is being accessed
         image = face_recognition.load_image_file(image_path)
         encoding = face_recognition.face_encodings(image)
         if encoding:
             known_face_encodings.append(encoding[0])
             known_face_names.append(name)
 
-# Initialize some variables
+# Initialize some variables for the video capture
 face_locations = []
 face_encodings = []
 face_names = []
 process_this_frame = True
 
-# Open the webcam
+# Open the webcam for real-time face recognition
 video_capture = cv2.VideoCapture(0)
 
 while True:
